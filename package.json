@@ -1,7 +1,6 @@
 {
   "name": "reusable-components",
   "version": "1.0.0",
-  "main": "index.js",
   "author": "Your Name <social@coderwelsch.com>",
   "license": "MIT",
   "private": false,

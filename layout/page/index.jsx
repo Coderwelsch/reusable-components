@@ -1,5 +1,20 @@
 import React from "react";
 
+import Seo from "../seo";
 
-export default () =>
-	<div>Hello, World!</div>;
+
+const Page = ({
+  children,
+  ...props
+}) =>
+	<React.Fragment>
+		<Seo { ...props } />
+		{ children }
+	</React.Fragment>;
+
+
+Page.propTypes = {
+	...Seo.propTypes
+};
+
+export default Page;

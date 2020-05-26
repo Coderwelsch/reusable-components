@@ -1,25 +1,34 @@
 {
-  "name": "reusable-components",
-  "version": "1.0.0",
-  "author": "Your Name <social@coderwelsch.com>",
-  "license": "MIT",
-  "private": false,
-  "dependencies": {
-    "react": "^16.13.1",
-    "react-bulma-components": "^3.2.0",
-    "react-dom": "^16.13.1"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.9.6",
-    "@storybook/addon-actions": "^5.3.18",
-    "@storybook/addon-links": "^5.3.18",
-    "@storybook/addons": "^5.3.18",
-    "@storybook/react": "^5.3.18",
-    "babel-loader": "^8.1.0"
-  },
-  "scripts": {
-    "start": "yarn storybook",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
-  }
+	"name": "reusable-components",
+	"version": "1.0.0",
+	"author": "Joseph Ribbe, <social@coderwelsch.com>",
+	"license": "MIT",
+	"main": "index.jsx",
+	"private": false,
+	"peerDependencies": {
+		"prop-types": "^15.7.2",
+		"react": "^16.13.1",
+		"react-dom": "^16.13.1"
+	},
+	"devDependencies": {
+		"@babel/core": "^7.9.6",
+		"@storybook/addon-actions": "^5.3.18",
+		"@storybook/addon-links": "^5.3.18",
+		"@storybook/addon-storysource": "^5.3.18",
+		"@storybook/addons": "^5.3.18",
+		"@storybook/react": "^5.3.18",
+		"css-loader": "^3.5.3",
+		"babel-loader": "^8.1.0",
+		"sass-loader": "^8.0.2",
+		"style-loader": "^1.2.1"
+	},
+	"scripts": {
+		"start": "yarn storybook",
+		"storybook": "start-storybook -p 6006",
+		"build-storybook": "build-storybook"
+	},
+	"dependencies": {
+		"react-bulma-components": "^3.2.0",
+		"react-helmet": "^6.0.0"
+	}
 }

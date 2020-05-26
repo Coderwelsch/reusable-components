@@ -1,0 +1,120 @@
+.nav {
+	position: fixed;
+	z-index: 1000;
+	top: 0;
+	left: 0;
+
+	width: 100%;
+
+	.container {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		.fadeWrapper {
+			position: relative;
+
+			display: flex;
+			align-items: center;
+
+			justify-content: space-between;
+			width: 100%;
+			max-width: calc(100% - 7.5rem);
+
+			&.isScrollable {
+				.arrow {
+					$size: 0.75rem;
+
+					position: fixed;
+					z-index: 1004;
+					top: 1rem;
+					right: 6.75rem;
+
+					display: block;
+					width: $size;
+
+					height: $size;
+
+					transform: rotate(-45deg);
+					animation: move 1.4s infinite ease-in-out;
+
+					animation-direction: alternate;
+
+					border-right: 0.14rem solid #CCC;
+					border-bottom: 0.14rem solid #CCC;
+
+					@keyframes move {
+						0% {
+							transform: translateX(0) rotate(-45deg);
+						}
+
+						100% {
+							transform: translateX(0.25rem) rotate(-45deg);
+						}
+					}
+				}
+
+				.items {
+					overflow-x: scroll;
+					overflow-y: hidden;
+					overflow-scrolling: touch;
+				}
+			}
+
+			&:after {
+				position: absolute;
+				z-index: 1002;
+				top: 0;
+				right: 0;
+
+				display: block;
+				width: 1rem;
+
+				height: 100%;
+				content: "";
+
+				pointer-events: none;
+
+				background: linear-gradient(
+								to right,
+								rgba(#FFFFFF, 0),
+								#FFFFFF
+				);
+			}
+
+			.items {
+				display: flex;
+
+				align-items: center;
+				justify-content: flex-start;
+				width: 100%;
+
+				.item {
+					font-weight: bold;
+
+					display: block;
+
+					padding: 0.75rem 1.5rem;
+					transition: color 200ms ease-in-out, background 200ms ease-in-out;
+					white-space: nowrap;
+					letter-spacing: 0.1rem;
+
+					text-transform: uppercase;
+
+					color: transparentize(white, 0.5);
+
+					&:hover,
+					&:active {
+						color: white !important;
+						background: darken(red, 10%) !important;
+					}
+
+					&.active {
+						color: white;
+					}
+				}
+			}
+		}
+
+	}
+}

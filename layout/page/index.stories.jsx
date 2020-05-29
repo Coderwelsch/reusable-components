@@ -1,4 +1,7 @@
 import React from "react";
+
+import Hero from "react-bulma-components/lib/components/hero/hero";
+
 import Page from "./";
 
 
@@ -21,6 +24,8 @@ export const Default = () =>
 		absoluteTeaserImagePath={ "http://via.placeholder.com/300" }
 		absoluteUrl={ "https://example.org" }>
 
-		<p>Content</p>
+		<Hero size={ "fullheight" }>
+			<p>Hello, World!</p>
+		</Hero>
 
 	</Page>;

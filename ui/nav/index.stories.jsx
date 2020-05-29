@@ -1,7 +1,7 @@
 import React from "react";
 import Nav from "./";
 
-import Section from "react-bulma-components/lib/components/section/section";
+import Hero from "react-bulma-components/lib/components/hero/hero";
 
 
 export default {
@@ -16,11 +16,22 @@ export const Default = () =>
 				{
 					label: "Home",
 					target: "home"
+				}, {
+					label: "Pricing",
+					target: "pricing"
 				}
 			] }
 		/>
 
-		<Section id={ "home" }>
+		<Hero
+			id={ "home" }
+			size={ "fullheight" }>
 			Home
-		</Section>
+		</Hero>
+
+		<Hero
+			id={ "pricing" }
+			size={ "fullheight" }>
+			Pricing
+		</Hero>
 	</div>;

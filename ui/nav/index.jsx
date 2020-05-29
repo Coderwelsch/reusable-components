@@ -14,19 +14,31 @@ export default class Nav extends Component {
 		LogoComp: PropTypes.func,
 		LogoProps: PropTypes.object,
 
+		NavItemsContainerProps: PropTypes.object,
 
 		NavItemComp: PropTypes.func,
 		NavItems: PropTypes.arrayOf(PropTypes.shape({
 			link: PropTypes.string,
 			label: PropTypes.string.isRequired,
-			target: PropTypes.string
-		})).isRequired
+			target: PropTypes.string,
+		})).isRequired,
+		NavItemProps: PropTypes.object,
+
+		CTAButtonComp: PropTypes.func,
+
+		scrollOffset: PropTypes.number
 	};
-	
-	static defaultProps = {};
+
+	static defaultProps = {
+		RootContainerProps: {},
+		NavItemsContainerProps: {},
+		NavItemProps: {},
+
+		scrollOffset: 0
+	};
 
 	state = {
-		active: ""
+		active: "",
 	};
 
 	scrollContainerRef = React.createRef();
@@ -56,7 +68,7 @@ export default class Nav extends Component {
 		}
 
 		// set targets
-		this._targets = [ ...document.body.querySelectorAll(selectors) ];
+		this._targets = [...document.body.querySelectorAll(selectors)];
 
 		// scroll listener
 		this._scrollHandler = this.onScroll.bind(this);
@@ -67,15 +79,6 @@ export default class Nav extends Component {
 		this._resizeHandler = this.onResize.bind(this);
 		window.addEventListener("resize", this._resizeHandler);
 		this.onResize();
-	}
-
-	componentDidUpdate (prevProps, prevState, snapshot) {
-		if (this.activeNavItemRef.current) {
-			this.activeNavItemRef.current.scrollIntoView({
-				behavior: "smooth",
-				block: "start"
-			});
-		}
 	}
 
 	componentWillUnmount () {
@@ -93,12 +96,12 @@ export default class Nav extends Component {
 		if (e && e.scrollWidth !== e.clientWidth) {
 			this.setState({
 				...this.state,
-				isNavOverflowing: true
+				isNavOverflowing: true,
 			});
 		} else if (this.state.isNavOverflowing) { // only set new state if necessary
 			this.setState({
 				...this.state,
-				isNavOverflowing: false
+				isNavOverflowing: false,
 			});
 		}
 	}
@@ -110,25 +113,40 @@ export default class Nav extends Component {
 
 			return (
 				rect.top <= scrollY &&
-				rect.top + rect.height > scrollY
+				rect.top + rect.height >= scrollY
 			);
 		});
 
 		if (filtered.length) {
 			this.setState({
 				...this.state,
-				active: filtered[0].id
+				active: filtered[0].id,
 			});
 		} else {
 			this.setState({
 				...this.state,
-				active: this.props.navElements[this.props.navElements.length - 1].target
+				active: this.props.NavItems[this.props.NavItems.length - 1].target,
 			});
 		}
 	}
 
 	onClick (event) {
-		document.querySelector("#" + event.target.dataset.target).scrollIntoView({
+		const selector = `#${ event.currentTarget.dataset.target }`;
+		const target = document.querySelector(selector);
+
+		if (!target) {
+			console.error(`Couldn’t find target element with selector «${ selector }» to scroll to`);
+			return;
+		}
+
+		const targetY = target.getBoundingClientRect().top;
+		const scrollPos = document.documentElement.scrollTop;
+		const { scrollOffset } = this.props;
+
+		const newScrollPos = targetY + scrollOffset + scrollPos;
+
+		window.scrollTo({
+			top: newScrollPos,
 			behavior: "smooth"
 		});
 	}
@@ -139,47 +157,86 @@ export default class Nav extends Component {
 
 	renderItem (item) {
 		const isActiveElem = item.target === this.state.active;
+		const onClick = (!isActiveElem && item.target) ? this.onClick.bind(this): undefined;
+
+		// custom nav item
+		if (this.props.NavItemComp) {
+			const { NavItemComp } = this.props;
+
+			return (
+				<NavItemComp
+					onClick={ onClick }
+					key={ item.target || item.link }
+					active={ isActiveElem }
+					ref={ isActiveElem ? this.activeNavItemRef : undefined }
+					{ ...item }
+				/>
+			);
+		}
 
 		return (
-			<li key={ item.target || item.link }>
+			<li
+				{ ...this.props.NavItemProps }
+				className={ [
+					Styles.item,
+					this.props.NavItemProps.className || undefined,
+					isActiveElem ? Styles.active : undefined,
+				].join(" ") }
+				data-target={ item.target }
+				key={ item.target || item.link }
+				onClick={ onClick }
+				data-active={ isActiveElem || undefined }
+				ref={ isActiveElem ? this.activeNavItemRef : undefined }>
+
 				<a
-					onClick={ item.target && this.onClick.bind(this) }
 					href={ item.link }
-					rel="noopener noreferrer"
-					ref={ isActiveElem ? this.activeNavItemRef : undefined }
-					className={ [
-						Styles.item,
-						isActiveElem ? Styles.active : undefined
-					].join(" ") }
-					data-target={ item.target }>
+					rel="noopener noreferrer">
 
 					{ item.label }
 
 				</a>
+
 			</li>
 		);
 	}
-	
+
 	render () {
 		const {
 			LogoComp,
 			LogoProps,
 			ContainerProps,
-			RootContainerProps
+			RootContainerProps,
+			CTAButtonComp,
+			NavItemsContainerProps,
 		} = this.props;
 
 		return (
-			<nav { ...RootContainerProps }>
+			<nav
+				{ ...RootContainerProps }
+				className={ [
+					Styles.nav,
+					RootContainerProps.className
+				].join(" ") }>
+
 				<Container { ...ContainerProps }>
 					{ LogoComp ?
 						<LogoComp { ...LogoProps } /> :
-						<Logo_PL { ...LogoProps } />
+						<LogoPlaceholder { ...LogoProps } />
 					}
 
 					<ul
+						{ ...NavItemsContainerProps }
 						ref={ this.scrollContainerRef }
-						className={ Styles.items }>
+						className={ [
+							Styles.items,
+							NavItemsContainerProps.className || undefined,
+						].join(" ") }>
+
+						{/* standard nav items */}
 						{ this.props.NavItems.map(this.renderItem.bind(this)) }
+
+						{/* special cta button */}
+						<CTAButtonComp />
 					</ul>
 				</Container>
 			</nav>
@@ -187,6 +244,5 @@ export default class Nav extends Component {
 	}
 }
 
-
-const Logo_PL = (props) =>
+const LogoPlaceholder = (props) =>
 	<a href={ "/" } { ...props }>LOGO</a>;

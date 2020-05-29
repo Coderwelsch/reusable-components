@@ -1,4 +1,4 @@
-const path = require('path');
+const path = require("path");
 
 // Export a function. Accept the base config as the only param.
 module.exports = async ({ config }) => {
@@ -8,24 +8,37 @@ module.exports = async ({ config }) => {
 
 	// Make whatever fine-grained changes you need
 	config.module.rules.push({
-		test: /\.scss$/,
+		test: /\.module.s[ac]ss$/,
 		loaders: [
-			require.resolve('style-loader'),
+			require.resolve("style-loader"),
 			{
-				loader: require.resolve('css-loader'),
+				loader: require.resolve("css-loader"),
 				options: {
 					importLoaders: 1,
 					modules: {
-						mode: 'local',
-						localIdentName: '[path][name]__[local]--[hash:base64:5]',
-						// localIdentName: '[sha1:hash:hex:4]',
-						context: path.resolve(__dirname, 'src'),
-						hashPrefix: 'my-custom-hash',
+						mode: "local",
+						context: path.resolve(__dirname, "src")
 					},
 				},
 			},
-			require.resolve('sass-loader')
+			require.resolve("sass-loader"),
 		],
+	});
+
+	config.module.rules.push({
+		test: /\.sass$/,
+		loaders: [
+			require.resolve("style-loader"),
+			{
+				loader: require.resolve("css-loader"),
+				options: {
+					importLoaders: 1,
+					modules: false
+				}
+			},
+			require.resolve("sass-loader"),
+		],
+		include: path.resolve(__dirname, "../"),
 	});
 
 	// Return the altered config

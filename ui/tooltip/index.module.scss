@@ -1,0 +1,6 @@
+@import "mixins";
+
+
+.tooltip {
+	@include tooltip();
+}

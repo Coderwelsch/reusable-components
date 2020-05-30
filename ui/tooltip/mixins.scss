@@ -1,0 +1,50 @@
+@mixin tooltip (
+	$padding: 0.5rem 0.25rem,
+	$background: #CCC,
+	$backgroundHover: #BBB,
+	$arrow-width: 1rem,
+	$arrow-height: 0.5rem,
+	$arrow-offset: -0.75rem
+) {
+	display: flex;
+	justify-content: center; // left and right
+	align-items: center; // top and bottom
+
+	padding: $padding;
+
+	font-weight: bold;
+
+	background: $background;
+
+	filter:
+		drop-shadow(0 0.1rem 0.25rem rgba(0, 0, 0, 0.1))
+		drop-shadow(0 0.1rem 0.1rem rgba(0, 0, 0, 0.1));
+
+	&:hover {
+		background: $backgroundHover;
+
+		&:after {
+			border-top-color: $backgroundHover;
+		}
+	}
+
+	&:after {
+		position: absolute;
+		top: calc(100% - 1px);
+		left: 50%;
+
+		width: 0;
+		height: 0;
+
+		content: "";
+
+		border-left: $arrow-width solid transparent;
+		border-right: $arrow-width solid transparent;
+
+		border-top: $arrow-height solid $background;
+
+		transform: translateX($arrow-offset);
+	}
+
+	@content;
+}

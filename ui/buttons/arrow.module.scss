@@ -1,17 +1,10 @@
+@import "mixins";
+
+
 .arrow {
 	$balance-padding: 1.25rem;
 	$arrow-width: 0.625rem;
 	$arrow-height: 1.25rem;
-
-	position: relative;
-
-	border: none;
-
-	font-weight: bold;
-
-	filter:
-		drop-shadow(0 0.1rem 0.25rem rgba(0, 0, 0, 0.1))
-		drop-shadow(0 0.1rem 0.1rem rgba(0, 0, 0, 0.1));
 
 	&:after {
 		position: absolute;
@@ -37,33 +30,10 @@
 	}
 
 	&.arrowLeft {
-		padding-right: $balance-padding;
-
-		&:after {
-			right: calc(100% + 0.22rem);
-			top: 0;
-
-			border-radius: 0.1rem;
-			border-top: $arrow-height solid transparent;
-			border-bottom: $arrow-height solid transparent;
-
-			border-right: $arrow-width solid white;
-
-			transform: translateX(50%);
-		}
+		@include button-arrow-left();
 	}
 
 	&.arrowRight {
-		padding-left: $balance-padding;
-
-		&:after {
-			left: calc(100% - 0.12rem);
-			top: 0;
-
-			border-top: $arrow-height solid transparent;
-			border-bottom: $arrow-height solid transparent;
-
-			border-left: $arrow-width solid white;
-		}
+		@include button-arrow-right();
 	}
 }

@@ -1,6 +1,6 @@
 {
 	"name": "reusable-components",
-	"version": "1.0.0",
+	"version": "0.1.0",
 	"author": "Joseph Ribbe, <social@coderwelsch.com>",
 	"license": "MIT",
 	"main": "index.jsx",
@@ -19,6 +19,8 @@
 		"@storybook/react": "^5.3.18",
 		"babel-loader": "^8.1.0",
 		"css-loader": "^3.5.3",
+		"eslint": "^7.1.0",
+		"eslint-plugin-react": "^7.20.0",
 		"node-sass": "^4.14.1",
 		"sass-loader": "^8.0.2",
 		"style-loader": "^1.2.1"

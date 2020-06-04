@@ -159,13 +159,21 @@ export default class Nav extends Component {
 		const isActiveElem = item.target === this.state.active;
 		const onClick = (!isActiveElem && item.target) ? this.onClick.bind(this): undefined;
 
+		// fix eslint error jsx-a11y/control-has-associated-label
+		const eventProps = {};
+
+		if (onClick) {
+			eventProps.onClick = onClick;
+			eventProps.onKeyDown = onClick;
+		}
+
 		// custom nav item
 		if (this.props.NavItemComp) {
 			const { NavItemComp } = this.props;
 
 			return (
 				<NavItemComp
-					onClick={ onClick }
+					{ ...eventProps }
 					key={ item.target || item.link }
 					active={ isActiveElem }
 					ref={ isActiveElem ? this.activeNavItemRef : undefined }
@@ -177,6 +185,7 @@ export default class Nav extends Component {
 		return (
 			<li
 				{ ...this.props.NavItemProps }
+				{ ...eventProps }
 				className={ [
 					Styles.item,
 					this.props.NavItemProps.className || undefined,
@@ -184,7 +193,6 @@ export default class Nav extends Component {
 				].join(" ") }
 				data-target={ item.target }
 				key={ item.target || item.link }
-				onClick={ onClick }
 				data-active={ isActiveElem || undefined }
 				ref={ isActiveElem ? this.activeNavItemRef : undefined }>
 

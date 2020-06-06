@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 
 import Container from "react-bulma-components/lib/components/container/container";
+import { scrollToElement } from "../../helper";
 
 import Styles from "./index.module.scss";
 
@@ -26,7 +27,10 @@ export default class Nav extends Component {
 
 		CTAButtonComp: PropTypes.func,
 
-		scrollOffset: PropTypes.number
+		scrollOffset: PropTypes.number,
+
+		mobileBreakpoint: PropTypes.number,
+		MobileNavComp: PropTypes.func
 	};
 
 	static defaultProps = {
@@ -34,11 +38,13 @@ export default class Nav extends Component {
 		NavItemsContainerProps: {},
 		NavItemProps: {},
 
-		scrollOffset: 0
+		scrollOffset: 0,
 	};
 
 	state = {
 		active: "",
+		isNavOverflowing: false,
+		browserWidth: typeof window !== "undefined" ? window.innerWidth : undefined
 	};
 
 	scrollContainerRef = React.createRef();
@@ -47,6 +53,10 @@ export default class Nav extends Component {
 	_scrollHandler = null;
 	_resizeHandler = null;
 	_targets = null;
+
+	/*
+	* HELPER METHODS
+	*/
 
 	/*
 	* COMPONENT METHODS
@@ -92,16 +102,25 @@ export default class Nav extends Component {
 
 	onResize () {
 		const e = this.scrollContainerRef.current;
+		const browserWidth = window.innerWidth;
 
 		if (e && e.scrollWidth !== e.clientWidth) {
 			this.setState({
 				...this.state,
 				isNavOverflowing: true,
+				browserWidth
 			});
 		} else if (this.state.isNavOverflowing) { // only set new state if necessary
 			this.setState({
 				...this.state,
 				isNavOverflowing: false,
+				browserWidth
+			});
+		} else {
+			this.setState({
+				...this.state,
+				isNavOverflowing: false,
+				browserWidth
 			});
 		}
 	}
@@ -131,24 +150,10 @@ export default class Nav extends Component {
 	}
 
 	onClick (event) {
-		const selector = `#${ event.currentTarget.dataset.target }`;
-		const target = document.querySelector(selector);
-
-		if (!target) {
-			console.error(`Couldn’t find target element with selector «${ selector }» to scroll to`);
-			return;
-		}
-
-		const targetY = target.getBoundingClientRect().top;
-		const scrollPos = document.documentElement.scrollTop;
-		const { scrollOffset } = this.props;
-
-		const newScrollPos = targetY + scrollOffset + scrollPos;
-
-		window.scrollTo({
-			top: newScrollPos,
-			behavior: "smooth"
-		});
+		scrollToElement(
+			`#${ event.currentTarget.dataset.target }`,
+			this.props.scrollOffset
+		);
 	}
 
 	/*
@@ -157,7 +162,7 @@ export default class Nav extends Component {
 
 	renderItem (item) {
 		const isActiveElem = item.target === this.state.active;
-		const onClick = (!isActiveElem && item.target) ? this.onClick.bind(this): undefined;
+		const onClick = item.target ? this.onClick.bind(this) : undefined;
 
 		// fix eslint error jsx-a11y/control-has-associated-label
 		const eventProps = {};
@@ -173,6 +178,7 @@ export default class Nav extends Component {
 
 			return (
 				<NavItemComp
+					{ ...this.props.NavItemProps }
 					{ ...eventProps }
 					key={ item.target || item.link }
 					active={ isActiveElem }
@@ -214,16 +220,18 @@ export default class Nav extends Component {
 			LogoProps,
 			ContainerProps,
 			RootContainerProps,
-			CTAButtonComp,
-			NavItemsContainerProps,
+			mobileBreakpoint,
+			MobileNavComp
 		} = this.props;
+
+		const { browserWidth } = this.state;
 
 		return (
 			<nav
 				{ ...RootContainerProps }
 				className={ [
 					Styles.nav,
-					RootContainerProps.className
+					RootContainerProps.className,
 				].join(" ") }>
 
 				<Container { ...ContainerProps }>
@@ -232,22 +240,36 @@ export default class Nav extends Component {
 						<LogoPlaceholder { ...LogoProps } />
 					}
 
-					<ul
-						{ ...NavItemsContainerProps }
-						ref={ this.scrollContainerRef }
-						className={ [
-							Styles.items,
-							NavItemsContainerProps.className || undefined,
-						].join(" ") }>
-
-						{/* standard nav items */}
-						{ this.props.NavItems.map(this.renderItem.bind(this)) }
-
-						{/* special cta button */}
-						<CTAButtonComp />
-					</ul>
+					{ MobileNavComp && browserWidth < mobileBreakpoint ?
+						<MobileNavComp />:
+						this.renderNavItemsList()
+					}
 				</Container>
 			</nav>
+		);
+	}
+
+	renderNavItemsList () {
+		const {
+			CTAButtonComp,
+			NavItemsContainerProps,
+		} = this.props;
+
+		return (
+			<ul
+				{ ...NavItemsContainerProps }
+				ref={ this.scrollContainerRef }
+				className={ [
+					Styles.items,
+					NavItemsContainerProps.className || undefined,
+				].join(" ") }>
+
+				{/* standard nav items */ }
+				{ this.props.NavItems.map(this.renderItem.bind(this)) }
+
+				{/* special cta button */ }
+				{ CTAButtonComp && <CTAButtonComp/> }
+			</ul>
 		);
 	}
 }

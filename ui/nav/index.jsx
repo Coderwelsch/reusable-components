@@ -22,6 +22,7 @@ export default class Nav extends Component {
 			link: PropTypes.string,
 			label: PropTypes.string.isRequired,
 			target: PropTypes.string,
+			hrefTarget: PropTypes.string
 		})).isRequired,
 		NavItemProps: PropTypes.object,
 
@@ -204,6 +205,7 @@ export default class Nav extends Component {
 
 				<a
 					href={ item.link }
+					target={ item.hrefTarget }
 					rel="noopener noreferrer">
 
 					{ item.label }

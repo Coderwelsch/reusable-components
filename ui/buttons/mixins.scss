@@ -14,7 +14,7 @@
 
 	padding-right: $balance-padding $i;
 
-	background: $color;
+	background: $color !important;
 
 	&:after {
 		right: calc(100% + #{ $arrow-offset }) $i;

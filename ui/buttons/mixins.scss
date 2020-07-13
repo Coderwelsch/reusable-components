@@ -3,8 +3,7 @@
 	$arrow-width: 0.625rem,
 	$arrow-height: 1.25rem,
 	$arrow-offset: 0.22rem,
-	$overwrite: false,
-	$color: white
+	$overwrite: false
 ) {
 	$i: unquote("");
 
@@ -14,8 +13,6 @@
 
 	padding-right: $balance-padding $i;
 
-	background: $color !important;
-
 	&:after {
 		right: calc(100% + #{ $arrow-offset }) $i;
 		top: 0 $i;
@@ -24,15 +21,9 @@
 		border-top: $arrow-height solid transparent $i;
 		border-bottom: $arrow-height solid transparent $i;
 
-		border-right: $arrow-width solid $color $i;
+		border-right: $arrow-width solid white $i;
 
 		transform: translateX(50%) $i;
-	}
-
-	&:hover {
-		&:after {
-			border-right-color: $color;
-		}
 	}
 
 	@content;
@@ -43,8 +34,7 @@
 	$arrow-width: 0.625rem,
 	$arrow-height: 1.25rem,
 	$arrow-offset: 0.12rem,
-	$overwrite: false,
-	$color: white
+	$overwrite: false
 ) {
 	$i: unquote("");
 
@@ -53,8 +43,6 @@
 	}
 
 	padding-left: $balance-padding $i;
-
-	background: $color;
 
 	&:after {
 		left: calc(100% - #{ $arrow-offset }) $i;

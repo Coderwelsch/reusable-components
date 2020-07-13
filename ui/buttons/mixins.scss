@@ -56,11 +56,5 @@
 		border-left: $arrow-width solid white $i;
 	}
 
-	&:hover {
-		&:after {
-			border-right-color: $color;
-		}
-	}
-
 	@content;
 }

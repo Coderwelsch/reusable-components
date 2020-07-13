@@ -3,7 +3,8 @@
 	$arrow-width: 0.625rem,
 	$arrow-height: 1.25rem,
 	$arrow-offset: 0.22rem,
-	$overwrite: false
+	$overwrite: false,
+	$color: white
 ) {
 	$i: unquote("");
 
@@ -13,6 +14,8 @@
 
 	padding-right: $balance-padding $i;
 
+	background: $color;
+
 	&:after {
 		right: calc(100% + #{ $arrow-offset }) $i;
 		top: 0 $i;
@@ -21,9 +24,15 @@
 		border-top: $arrow-height solid transparent $i;
 		border-bottom: $arrow-height solid transparent $i;
 
-		border-right: $arrow-width solid white $i;
+		border-right: $arrow-width solid $color $i;
 
 		transform: translateX(50%) $i;
+	}
+
+	&:hover {
+		&:after {
+			border-right-color: $color;
+		}
 	}
 
 	@content;
@@ -34,7 +43,8 @@
 	$arrow-width: 0.625rem,
 	$arrow-height: 1.25rem,
 	$arrow-offset: 0.12rem,
-	$overwrite: false
+	$overwrite: false,
+	$color: white
 ) {
 	$i: unquote("");
 
@@ -43,6 +53,8 @@
 	}
 
 	padding-left: $balance-padding $i;
+
+	background: $color;
 
 	&:after {
 		left: calc(100% - #{ $arrow-offset }) $i;
@@ -54,6 +66,12 @@
 		border-bottom: $arrow-height solid transparent $i;
 
 		border-left: $arrow-width solid white $i;
+	}
+
+	&:hover {
+		&:after {
+			border-right-color: $color;
+		}
 	}
 
 	@content;

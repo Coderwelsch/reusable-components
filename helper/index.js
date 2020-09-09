@@ -24,3 +24,15 @@ export const scrollToElement = (selector = "#someSelector", scrollOffset = 0) =>
 		behavior: "smooth",
 	});
 }
+
+export const flattenObjectArray = (objectArray, key) => {
+	const array = [];
+
+	for (const object of objectArray) {
+		if (object.hasOwnProperty(key)) {
+			array.push(object[key]);
+		}
+	}
+
+	return array;
+};

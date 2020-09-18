@@ -23,8 +23,8 @@ build:
   script:
     - ./ci/build.sh
 
-dev_deploy:
-  stage: dev_deploy
+deploy:
+  stage: deploy
   only:
     - master
   script:

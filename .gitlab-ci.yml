@@ -14,12 +14,13 @@ before_script:
 cache:
   paths:
     - node_modules/
+    - storybook-static/
 
 build:
   stage: build
   artifacts:
     paths:
-      - public/
+      - storybook-static/
   script:
     - ./ci/build.sh
 

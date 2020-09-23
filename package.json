@@ -35,6 +35,7 @@
 		"webpack-cli": "^3.3.12"
 	},
 	"scripts": {
+		"postinstall": "yarn build",
 		"prepare": "yarn build",
 		"start": "yarn storybook",
 		"storybook": "start-storybook -p 6006",

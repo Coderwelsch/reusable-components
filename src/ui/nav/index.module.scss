@@ -10,8 +10,8 @@
 
 	.container {
 		display: flex;
-		align-items: center;
-		justify-content: center;
+		justify-content: space-between; // left and right
+		align-items: center; // top and bottom
 
 		.fadeWrapper {
 			position: relative;
@@ -86,9 +86,10 @@
 
 			.items {
 				display: flex;
-
 				align-items: center;
 				justify-content: flex-start;
+				flex-wrap: nowrap;
+
 				width: 100%;
 
 				.item {

@@ -3,7 +3,7 @@ import {
 	Default as DefaultBtn,
 	ArrowLeft as ArrowLeftBtn,
 	ArrowRight as ArrowRightBtn
-} from "./";
+} from "./index";
 
 
 export default {

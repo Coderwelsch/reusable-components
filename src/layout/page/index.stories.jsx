@@ -2,7 +2,7 @@ import React from "react";
 
 import Hero from "react-bulma-components/lib/components/hero/hero";
 
-import Page from "./";
+import Page from "./index";
 
 
 export default {

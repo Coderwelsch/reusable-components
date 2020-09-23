@@ -1,7 +1,8 @@
 import React from "react";
-import Nav from "./";
-
 import Hero from "react-bulma-components/lib/components/hero/hero";
+
+//import
+import Nav from "./index";
 
 
 export default {
@@ -25,13 +26,15 @@ export const Default = () =>
 
 		<Hero
 			id={ "home" }
-			size={ "fullheight" }>
+			size={ "fullheight" }
+			backgroundColor={ "info" }>
 			Home
 		</Hero>
 
 		<Hero
 			id={ "pricing" }
-			size={ "fullheight" }>
+			size={ "fullheight" }
+			backgroundColor={ "success" }>
 			Pricing
 		</Hero>
 	</div>;

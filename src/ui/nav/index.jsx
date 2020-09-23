@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 
 import Container from "react-bulma-components/lib/components/container/container";
-import { scrollToElement } from "../../helper";
 
+import { cn, scrollToElement } from "../../helper";
 import Styles from "./index.module.scss";
 
 
@@ -36,6 +36,7 @@ export default class Nav extends Component {
 
 	static defaultProps = {
 		RootContainerProps: {},
+		ContainerProps: {},
 		NavItemsContainerProps: {},
 		NavItemProps: {},
 
@@ -236,7 +237,12 @@ export default class Nav extends Component {
 					RootContainerProps.className,
 				].join(" ") }>
 
-				<Container { ...ContainerProps }>
+				<Container
+					{ ...ContainerProps }
+					className={ cn(
+						Styles.container,
+						ContainerProps.className
+					) }>
 					{ LogoComp ?
 						<LogoComp { ...LogoProps } /> :
 						<LogoPlaceholder { ...LogoProps } />

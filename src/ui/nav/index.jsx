@@ -267,10 +267,10 @@ export default class Nav extends Component {
 			<ul
 				{ ...NavItemsContainerProps }
 				ref={ this.scrollContainerRef }
-				className={ [
+				className={ cn(
 					Styles.items,
-					NavItemsContainerProps.className || undefined,
-				].join(" ") }>
+					NavItemsContainerProps.className
+				) }>
 
 				{/* standard nav items */ }
 				{ this.props.NavItems.map(this.renderItem.bind(this)) }

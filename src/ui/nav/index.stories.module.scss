@@ -1,0 +1,10 @@
+@import "~bulma/bulma";
+
+
+.ctaButton {
+
+	//background: black !important;
+	&:after {
+		border-left-color: $dark !important;
+	}
+}

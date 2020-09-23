@@ -3,27 +3,31 @@
 	"version": "1.0.0",
 	"author": "Joseph Ribbe, <social@coderwelsch.com>",
 	"license": "MIT",
-	"main": "dist",
+	"main": "dist/index.js",
 	"private": false,
+	"scripts": {
+		"postinstall": "yarn create-lib;",
+		"start": "yarn storybook",
+		"storybook": "start-storybook -p 6006",
+		"build": "yarn build-storybook",
+		"create-lib": "babel --config-file ./.babelrc ./src --out-dir ./dist --copy-files --source-maps",
+		"build-storybook": "build-storybook"
+	},
+	"files": [
+		"dist"
+	],
 	"peerDependencies": {
 		"prop-types": "^15.7.2",
 		"react": "^16.13.1",
 		"react-dom": "^16.13.1"
 	},
 	"devDependencies": {
-		"@babel/cli": "^7.11.6",
-		"@babel/core": "^7.11.6",
-		"@babel/plugin-proposal-class-properties": "^7.10.4",
-		"@babel/plugin-transform-parameters": "^7.10.5",
-		"@babel/preset-env": "^7.11.5",
 		"@storybook/addon-actions": "^6.0.21",
 		"@storybook/addon-links": "^6.0.21",
 		"@storybook/addon-storysource": "^6.0.21",
 		"@storybook/addons": "^6.0.21",
 		"@storybook/preset-scss": "^1.0.2",
 		"@storybook/react": "^6.0.21",
-		"babel-loader": "^8.1.0",
-		"babel-plugin-parameter-decorator": "^1.0.16",
 		"css-loader": "^4.3.0",
 		"eslint": "^7.1.0",
 		"eslint-import-resolver-alias": "^1.1.2",
@@ -31,19 +35,18 @@
 		"node-sass": "^4.14.1",
 		"sass": "^1.26.11",
 		"sass-loader": "^10.0.2",
-		"style-loader": "^1.2.1",
-		"webpack-cli": "^3.3.12"
-	},
-	"scripts": {
-		"postinstall": "yarn build",
-		"prepare": "yarn build",
-		"start": "yarn storybook",
-		"storybook": "start-storybook -p 6006",
-		"build": "yarn create-lib; yarn build-storybook",
-		"create-lib": "babel ./src --out-dir ./dist --copy-files --source-maps",
-		"build-storybook": "build-storybook"
+		"style-loader": "^1.2.1"
 	},
 	"dependencies": {
+		"webpack-cli": "^3.3.12",
+		"babel-loader": "^8.1.0",
+		"@babel/cli": "^7.11.6",
+		"@babel/core": "^7.11.6",
+		"@babel/plugin-proposal-class-properties": "^7.10.4",
+		"@babel/plugin-proposal-object-rest-spread": "^7.11.0",
+		"@babel/plugin-transform-parameters": "^7.10.5",
+		"@babel/plugin-transform-spread": "^7.11.0",
+		"@babel/preset-env": "^7.11.5",
 		"bulma": "^0.9.0",
 		"html-webpack-plugin": "^4.5.0",
 		"mini-css-extract-plugin": "^0.11.2",

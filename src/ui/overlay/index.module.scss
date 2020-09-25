@@ -1,0 +1,70 @@
+.overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 9999999;
+
+	width: 100vw;
+	height: 100vh;
+
+	pointer-events: none;
+
+	display: flex;
+	justify-content: center; // left and right
+	align-items: center; // top and bottom
+
+	opacity: 0;
+
+	cursor: pointer;
+
+	background: rgba(0, 0, 0, 0.75);
+
+	transition: opacity 250ms ease-in-out;
+
+	&.isActive {
+		pointer-events: initial;
+
+		opacity: 1;
+
+		.content {
+			animation-name: fade-in-content;
+		}
+	}
+
+	.content {
+		width: 100%;
+		max-width: 30rem;
+
+		min-height: 20rem;
+		max-height: 100vh;
+		
+		cursor: default;
+
+		overflow: auto;
+		overflow-scrolling: touch;
+
+		border-radius: 0.5rem;
+
+		background: white;
+
+		box-shadow: 0 0.25rem 2rem rgba(0, 0, 0, 0.2);
+
+		animation-duration: 250ms;
+		animation-timing-function: ease-in-out;
+		animation-fill-mode: both;
+
+		@keyframes fade-in-content {
+			from {
+				opacity: 0;
+
+				transform: translateY(50%);
+			}
+
+			to {
+				opacity: 1;
+
+				transform: none;
+			}
+		}
+	}
+}

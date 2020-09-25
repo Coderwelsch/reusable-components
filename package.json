@@ -1,6 +1,6 @@
 {
 	"name": "reusable-components",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"author": "Joseph Ribbe, <social@coderwelsch.com>",
 	"license": "MIT",
 	"main": "dist/index.js",
@@ -51,6 +51,7 @@
 		"optimize-css-assets-webpack-plugin": "^5.0.4",
 		"progress-bar-webpack-plugin": "^2.1.0",
 		"react-bulma-components": "^3.2.0",
+		"react-dom": "^16.13.1",
 		"react-helmet": "^6.0.0",
 		"webpack": "^4.44.2",
 		"webpack-bundle-analyzer": "^3.9.0",

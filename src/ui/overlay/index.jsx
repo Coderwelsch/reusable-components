@@ -30,8 +30,6 @@ export default class Overlay extends Component {
 	keyPressHandler = null;
 
 	componentDidMount () {
-		console.log("UPDATE");
-
 		this.setState({
 			...this.state,
 			isClient: true

@@ -6,6 +6,7 @@
 	"main": "dist/index.js",
 	"private": false,
 	"scripts": {
+		"postpublish": "yarn clean; yarn create-lib",
 		"clean": "rm -rf dist",
 		"postinstall": "yarn  clean; yarn create-lib",
 		"start": "yarn storybook",

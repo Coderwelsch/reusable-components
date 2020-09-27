@@ -8,6 +8,7 @@ import Styles from "./index.module.scss";
 
 export default class Overlay extends Component {
 	static propTypes = {
+		createPortal: PropTypes.bool,
 		containerProps: PropTypes.object,
 		contentProps: PropTypes.object,
 
@@ -16,12 +17,26 @@ export default class Overlay extends Component {
 	};
 	
 	static defaultProps = {
+		createPortal: false,
 		isActive: false,
 		containerProps: {},
 		contentProps: {}
 	};
 
+	state = {
+		isClient: false
+	};
+
 	keyPressHandler = null;
+
+	componentDidMount () {
+		console.log("UPDATE");
+
+		this.setState({
+			...this.state,
+			isClient: true
+		});
+	}
 
 	componentDidUpdate (prevProps, prevState, snapshot) {
 		if (this.props.isActive) {
@@ -47,11 +62,13 @@ export default class Overlay extends Component {
 		}
 	}
 
-	handleKeyPress ({ key }) {
+	handleKeyPress ({ key, ...event }) {
 		if (key === "Escape") {
+			event.preventDefault();
 			this.props.onClose();
+
+			return false;
 		}
-		return undefined;
 	}
 
 	renderOverlay () {
@@ -69,7 +86,7 @@ export default class Overlay extends Component {
 					Styles.overlay,
 					isActive && Styles.isActive
 				) }
-			    onClick={ this.handleClick.bind(this) }>
+				onClick={ this.handleClick.bind(this) }>
 
 				<div
 					{ ...contentProps }
@@ -87,13 +104,17 @@ export default class Overlay extends Component {
 	}
 
 	render () {
-		if (typeof window === "undefined") {
-			return null;
-		}
+		if (this.props.createPortal) {
+			if (!this.state.isClient) {
+				return null;
+			}
 
-		return ReactDOM.createPortal(
-			this.renderOverlay(),
-			document.body
-		)
+			return ReactDOM.createPortal(
+				this.renderOverlay(),
+				document.body
+			)
+		} else {
+			return this.renderOverlay();
+		}
 	}
 }

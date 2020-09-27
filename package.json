@@ -10,7 +10,7 @@
 		"postinstall": "yarn  clean; yarn create-lib",
 		"start": "yarn storybook",
 		"storybook": "start-storybook -p 6006",
-		"build": "yarn build-storybook",
+		"build": "yarn create-lib; yarn build-storybook",
 		"create-lib": "babel ./src --out-dir ./dist --copy-files --source-maps",
 		"build-storybook": "build-storybook"
 	},

@@ -63,14 +63,17 @@ export default class Overlay extends Component {
 		} = this.props;
 
 		return (
-			<div className={ cn(
+			<div
+				className={ cn(
 					containerProps.className,
 					Styles.overlay,
 					isActive && Styles.isActive
 				) }
-			     onClick={ this.handleClick.bind(this) }>
+			    onClick={ this.handleClick.bind(this) }>
 
-				<div className={ cn(
+				<div
+					{ ...contentProps }
+					className={ cn(
 						Styles.content,
 						contentProps.className,
 					) }>
@@ -84,6 +87,10 @@ export default class Overlay extends Component {
 	}
 
 	render () {
+		if (typeof window === "undefined") {
+			return null;
+		}
+
 		return ReactDOM.createPortal(
 			this.renderOverlay(),
 			document.body

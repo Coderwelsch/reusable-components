@@ -6,11 +6,12 @@
 	"main": "dist/index.js",
 	"private": false,
 	"scripts": {
-		"postinstall": "yarn create-lib;",
+		"prepublish": "rm -rf dist; yarn create-lib",
+		"postinstall": "yarn create-lib",
 		"start": "yarn storybook",
 		"storybook": "start-storybook -p 6006",
 		"build": "yarn build-storybook",
-		"create-lib": "babel --config-file ./.babelrc ./src --out-dir ./dist --copy-files --source-maps",
+		"create-lib": "babel ./src --out-dir ./dist --source-maps",
 		"build-storybook": "build-storybook"
 	},
 	"files": [

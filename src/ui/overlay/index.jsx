@@ -89,8 +89,8 @@ export default class Overlay extends Component {
 				<div
 					{ ...contentProps }
 					className={ cn(
-						Styles.content,
 						contentProps.className,
+						Styles.content,
 					) }>
 
 					{ children }

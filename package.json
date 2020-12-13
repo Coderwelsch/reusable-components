@@ -6,13 +6,13 @@
 	"main": "dist/index.js",
 	"private": false,
 	"scripts": {
-		"postpublish": "yarn clean; yarn create-lib",
+		"postpublish": "yarn create-lib",
 		"clean": "rm -rf dist",
-		"postinstall": "yarn  clean; yarn create-lib",
+		"postinstall": "yarn create-lib",
 		"start": "yarn storybook",
 		"storybook": "start-storybook -p 6006",
 		"build": "yarn create-lib; yarn build-storybook",
-		"create-lib": "babel ./src --out-dir ./dist --copy-files --source-maps",
+		"create-lib": "yarn clean; babel ./src --out-dir ./dist --copy-files --source-maps",
 		"build-storybook": "build-storybook"
 	},
 	"files": [
